@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Arfa Bakery</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1e90ff">
+<link rel="apple-touch-icon" href="icon-192.png">
+
+<style>
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* BODY & BACKGROUND */
+body {
+  height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+}
+
+/* DARK OVERLAY */
+body::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 0;
+}
+
+/* BACKGROUND SLIDES */
+.bg-slide {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out, transform 5s ease;
+  transform: scale(1);
+  z-index: -1;
+}
+.bg-slide.active {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* LIGHT GLOW ORBS */
+.glow {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.25;
+  filter: blur(120px);
+  animation: float 12s infinite ease-in-out;
+  z-index: 1;
+}
+.glow:nth-child(1) { width: 300px; height: 300px; background: #fff2e6; top: 10%; left: 5%; animation-delay: 0s; }
+.glow:nth-child(2) { width: 400px; height: 400px; background: #ffd2a6; bottom: 10%; right: 5%; animation-delay: 3s; }
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-25px); } }
+
+/* FLOATING BAKERY ICONS */
+.floating-icon {
+  position: absolute;
+  width: 50px; height: 50px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  animation: floatIcon 12s infinite ease-in-out;
+  opacity: 0.7;
+}
+@keyframes floatIcon {
+  0% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-50px) rotate(20deg);}
+  100% { transform: translateY(0) rotate(0deg);}
+}
+
+/* MAIN CARD */
+.container {
+  position: relative;
+  z-index: 2;
+  background: rgba(255, 248, 240, 0.2);
+  backdrop-filter: blur(30px);
+  border-radius: 32px;
+  padding: 60px 45px;
+  width: 380px;
+  text-align: center;
+  box-shadow: 0 12px 50px rgba(0, 0, 0, 0.3);
+  transform: translateY(30px);
+  animation: floatIn 1.2s ease forwards;
+}
+@keyframes floatIn {
+  0% { transform: translateY(50px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* LOGO TEXT */
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-style: calc(10);
+  font-size: 40px;
+  color: #cf6e0d;
+  margin-bottom: 12px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+  animation: glowText 1000s infinite alternate;
+}
+@keyframes glowText {
+  0% { text-shadow: 2px 2px 8px rgba(0,0,0,0.5); }
+  100% { text-shadow: 2px 2px 20px rgba(255,255,255,0.8); }
+}
+.tagline {
+  font-size: 16px;
+  color: #fff8f0;
+  margin-bottom: 40px;
+  letter-spacing: 0.5px;
+  text-shadow: 1px 1px 6px rgba(0,0,0,0.6);
+}
+
+/* BUTTONS */
+.btn {
+  display: block;
+  width: 100%;
+  border: none;
+  border-radius: 16px;
+  padding: 14px;
+  margin: 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #fff;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+.btn:hover {
+  transform: scale(1.08) rotate(-1deg);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+}
+.btn-admin { background: linear-gradient(135deg, #ff7b45, #ff4e42); }
+.btn-employee { background: linear-gradient(135deg, #ffd27f, #ffb347); }
+
+/* FOOTER */
+.footer {
+  margin-top: 25px;
+  font-size: 13px;
+  color: #fff8f0;
+  opacity: 0.9;
+  text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+}
+
+/* MOBILE FRIENDLY */
+@media (max-width: 600px) {
+  .container { width: 90%; padding: 45px 25px; }
+  .logo { font-size: 36px; }
+  .glow, .floating-icon { display: none; }
+}
+</style>
+</head>
+
+<body>
+  <button id="installAppBtn" style="
+  display:none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #1e90ff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  font-size: 16px;
+  cursor: pointer;
+">📱 Install Arafa Bakery App</button>
+
+<!-- Background slides -->
+<div class="bg-slide" style="background-image:url('1.avif')"></div>
+<div class="bg-slide" style="background-image:url('2.avif')"></div>
+<div class="bg-slide" style="background-image:url('3.avif')"></div>
+<div class="bg-slide" style="background-image:url('4.avif')"></div>
+<div class="bg-slide" style="background-image:url('5.avif')"></div>
+<div class="bg-slide" style="background-image:url('6.avif')"></div>
+<div class="bg-slide" style="background-image:url('7.avif')"></div>
+<div class="bg-slide" style="background-image:url('8.avif')"></div>
+
+<!-- Glowing orbs -->
+<div class="glow"></div>
+<div class="glow"></div>
+
+<!-- Floating bakery icons -->
+<div class="floating-icon" style="background-image:url('cupcake.png'); top: 70%; left: 15%;"></div>
+<div class="floating-icon" style="background-image:url('bread.png'); top: 75%; left: 70%; animation-duration: 15s;"></div>
+<div class="floating-icon" style="background-image:url('cookie.png'); top: 65%; left: 40%; animation-duration: 18s;"></div>
+
+<!-- Main content -->
+<div class="container">
+  <div class="logo">ARAFA BAKES</div>
+  <div class="tagline">Freshly baked delights, every day 💙</div>
+
+  <button class="btn btn-admin" onclick="window.location.href='admin.html'"> Admin Panel</button>
+  <button class="btn btn-employee" onclick="window.location.href='view.html'"> Employee</button>
+
+  <div class="footer">© 2025 Arfa Bakery | Baked with Love 💙</div>
+</div>
+
+<script>
+// Background slideshow with zoom
+let slides = document.querySelectorAll('.bg-slide');
+let current = 0;
+slides[current].classList.add('active');
+
+setInterval(() => {
+  slides[current].classList.remove('active');
+  current = (current + 1) % slides.length;
+  slides[current].classList.add('active');
+}, 3500); 
+</script>
+<script>
+  // Register the service worker
+  if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(() => console.log('Service Worker Registered'));
+    }
+
+    // Handle PWA install prompt
+    let deferredPrompt;
+    const installBtn = document.getElementById('installAppBtn');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.style.display = 'block';
+    });
+
+    installBtn.addEventListener('click', async () => {
+      installBtn.style.display = 'none';
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      console.log(`User response: ${outcome}`);
+      deferredPrompt = null;
+    });
+</script>
+
+
+</body>
+</html>

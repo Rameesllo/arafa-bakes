@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Employee Portal</title>
+<style>
+body { font-family:'Segoe UI',sans-serif; background:#f0f4f8; margin:0; padding:20px;}
+h1,h2{text-align:center;color:#2c3e50;}
+.container{max-width:700px;margin:auto;}
+.card{background:#fff;padding:20px;margin-bottom:20px;border-radius:12px;box-shadow:0 4px 15px rgba(0,0,0,0.1);}
+form label{display:block;margin-bottom:10px;font-weight:600;}
+form input{width:100%;padding:10px;margin-top:5px;margin-bottom:15px;border-radius:8px;border:1px solid #ccc;box-sizing:border-box;font-size:14px;}
+form button{width:100%;background:#3498db;color:#fff;padding:12px;border:none;border-radius:8px;font-size:16px;font-weight:bold;cursor:pointer;transition:0.3s;}
+form button:hover{background:#2980b9;}
+.employee-details p{margin:5px 0;}
+.attendance-grid{display:flex;flex-wrap:wrap;gap:4px;margin-top:10px;}
+.day {width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:50%;font-size:12px;color:#fff;position:relative;cursor:default;transition:0.3s;}
+.present{background:#27ae60;}
+.half{background: #f39c12; clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);}
+.absent{background:#e74c3c;}
+.empty{background:#bdc3c7;color:#666;}
+.day:hover::after{
+  content: attr(data-status);
+  position:absolute; top:-24px; left:50%; transform:translateX(-50%);
+  background:rgba(0,0,0,0.7); color:#fff; padding:2px 6px; border-radius:4px; font-size:10px; white-space:nowrap;
+}
+.month-section{margin-top:20px;}
+.month-title{font-weight:bold;margin-bottom:5px;color:#34495e;}
+.salary-info{margin-top:5px;font-weight:bold;color:#2c3e50;}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Employee Portal</h1>
+  <div class="card">
+    <form id="loginForm">
+      <label>Email: <input type="email" id="email" required></label>
+      <label>Password: <input type="password" id="password" required></label>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+  <div id="info"></div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDz-C00gltYO9zkYvcrGnaPVwCHcem-7jY",
+  authDomain: "arafa-bakery-33906.firebaseapp.com",
+  projectId: "arafa-bakery-33906",
+  storageBucket: "arafa-bakery-33906.appspot.com",
+  messagingSenderId: "362520951276",
+  appId: "1:362520951276:web:ead930237865e9aa69e8c9",
+  measurementId: "G-BY6R29F0QZ"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+function getDaysInMonth(year, month){ return new Date(year, month, 0).getDate(); }
+
+document.getElementById("loginForm").addEventListener("submit", async e=>{
+  e.preventDefault();
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  const snapshot = await getDocs(collection(db,"employees"));
+  let found=false;
+
+  snapshot.forEach(docSnap=>{
+    const data = docSnap.data();
+    if(data.email===email && data.password===password){
+      found=true;
+      displayEmployee(data);
+    }
+  });
+
+  if(!found) alert("Invalid email or password!");
+});
+
+function displayEmployee(data){
+  const container = document.getElementById("info");
+  container.innerHTML=`
+    <div class="card employee-details">
+      <h2>${data.name}</h2>
+      <p>Position: ${data.position}</p>
+      <p>Email: ${data.email}</p>
+      <p>Phone: ${data.phone}</p>
+      <p>Salary per Day: ₹${data.salary}</p>
+    </div>
+  `;
+
+  const attendanceDiv = document.createElement("div");
+  attendanceDiv.classList.add("card");
+  const attendance = data.attendance || {};
+  let html="";
+
+  Object.keys(attendance).sort().forEach(monthKey=>{
+    const [year, month] = monthKey.split("-");
+    const monthIndex = parseInt(month)-1;
+    const daysInMonth = getDaysInMonth(year, month);
+    let monthlySalary=0;
+
+    html+=`<div class="month-section"><div class="month-title">${monthNames[monthIndex]} ${year}</div>`;
+    html+='<div class="attendance-grid">';
+
+    for(let d=1; d<=daysInMonth; d++){
+      const dayStr=d.toString().padStart(2,'0');
+      const status = attendance[monthKey][dayStr] || "";
+      let className=status==="P"?"present":status==="A"?"absent":status==="H"?"half":"empty";
+      let statusText=status==="P"?"Present":status==="A"?"Absent":status==="H"?"Half Day":"No Data";
+
+      html+=`<div class="day ${className}" data-status="${statusText}">${d}</div>`;
+
+      if(status==="P") monthlySalary+=data.salary;
+      else if(status==="H") monthlySalary+=data.salary/2;
+    }
+
+    html+=`</div><div class="salary-info">Monthly Salary: ₹${monthlySalary.toFixed(2)}</div></div>`;
+  });
+
+  attendanceDiv.innerHTML = html;
+  container.appendChild(attendanceDiv);
+}
+</script>
+</body>
+</html>
