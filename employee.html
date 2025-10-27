@@ -83,10 +83,17 @@ tbody tr:hover { background: #f9f9f9; }
   td:nth-of-type(4)::before{content:"Phone";}
   td:nth-of-type(5)::before{content:"Password";}
   td:nth-of-type(6)::before{content:"Month";}
-  td:nth-of-type(7)::before{content:"Attendance";}
+  /* FIXED: Removed 'Attendance' label to prevent overlap */
+  td:nth-of-type(7)::before{content:"";}
   td:nth-of-type(8)::before{content:"Salary/Day";}
   td:nth-of-type(9)::before{content:"Monthly Salary";}
   td:nth-of-type(10)::before{content:"Actions";}
+
+  /* Center attendance buttons for mobile */
+  #employeeList td:nth-of-type(7){
+    text-align:center;
+    padding-left:0;
+  }
 
   .navbar h1 { font-size:16px; }
   .navbar button { padding:5px 10px; font-size:12px; }
@@ -99,7 +106,6 @@ tbody tr:hover { background: #f9f9f9; }
 
 <!-- Navbar with Products button -->
 <div class="navbar">
-  
   <button onclick="window.location.href='product.html'">Products</button>
 </div>
 
