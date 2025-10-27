@@ -1,154 +1,303 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Employee Attendance & Salary</title>
 <style>
 /* Navbar */
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #3498db;
-    color: #fff;
-    padding: 10px 15px;
-    border-radius: 0 0 10px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #3498db;
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 0 0 10px 10px;
 }
-.navbar h1 { margin: 0; font-size: 18px; }
+.navbar h1 {
+  margin: 0;
+  font-size: 18px;
+}
 .navbar button {
-    background: #2ce029;
-    color: #fff;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
+  background: #2ce029;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
 }
-.navbar button:hover { background: #1f618d; }
+.navbar button:hover {
+  background: #1f618d;
+}
 
 /* Body */
-body { font-family: 'Segoe UI', sans-serif; background: #f0f4f8; margin: 0; padding: 10px; }
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: #f0f4f8;
+  margin: 0;
+  padding: 10px;
+}
 
 /* Headings */
-h1,h2 { text-align: center; color: #2c3e50; margin-bottom: 10px; }
+h1,
+h2 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
 
 /* Container */
-.container { max-width: 1000px; margin: auto; }
+.container {
+  max-width: 1000px;
+  margin: auto;
+}
 
 /* Cards */
-.card { background: #fff; padding: 15px; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+.card {
+  background: #fff;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
 
 /* Form */
-form label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; }
-form input, form select, form button { width: 100%; padding: 8px; margin-top: 5px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #ccc; font-size: 14px; box-sizing: border-box; }
-form button { background: #3498db; color: #fff; font-weight: bold; cursor: pointer; transition: 0.3s; }
-form button:hover { background: #2980b9; }
+form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 14px;
+}
+form input,
+form select,
+form button {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+form button {
+  background: #3498db;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+form button:hover {
+  background: #2980b9;
+}
 
-/* Table */
-.table-wrapper { overflow-x:auto; }
-table { width: 100%; border-collapse: collapse; min-width: 600px; margin-top: 10px; }
-thead { background: #3498db; color: #fff; position: sticky; top:0; z-index:2; }
-thead th, tbody td { padding: 8px; text-align: center; border: 1px solid #eee; font-size: 13px; }
-tbody tr:hover { background: #f9f9f9; }
+/* Table wrapper (desktop) */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+/* Employee table (desktop only) */
+.employee-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+.employee-table th,
+.employee-table td {
+  border: 1px solid #eee;
+  padding: 8px;
+  text-align: center;
+  font-size: 13px;
+}
+.employee-table thead {
+  background: #3498db;
+  color: #fff;
+}
+
+/* Attendance buttons */
+.attendance-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+}
+.attendance-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 11px;
+  color: #fff;
+  cursor: pointer;
+  border: none;
+  transition: 0.2s;
+}
+.attendance-btn:hover {
+  transform: scale(1.15);
+}
+.present {
+  background: #27ae60;
+}
+.absent {
+  background: #e74c3c;
+}
+.half {
+  background: #f39c12;
+}
+.empty {
+  background: #bdc3c7;
+  color: #666;
+}
 
 /* Buttons */
-.attendance-btn { width: 24px; height: 24px; border-radius: 50%; font-weight: bold; font-size: 11px; color: #fff; cursor: pointer; margin: 1px; border: none; transition: 0.2s; }
-.attendance-btn:hover { transform: scale(1.2); box-shadow:0 0 4px rgba(0,0,0,0.3); }
-.present { background:#27ae60; }
-.absent { background:#e74c3c; }
-.half { background:#f39c12; }
-.empty { background:#bdc3c7; color:#666; }
+.btn {
+  padding: 4px 8px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 2px;
+  font-size: 12px;
+  transition: 0.3s;
+}
+.btn-edit {
+  background: #f1c40f;
+  color: #fff;
+}
+.btn-edit:hover {
+  background: #d4ac0d;
+}
+.btn-delete {
+  background: #e74c3c;
+  color: #fff;
+}
+.btn-delete:hover {
+  background: #c0392b;
+}
 
-.btn { padding:4px 8px; border:none; border-radius:6px; cursor:pointer; margin:2px; font-size:12px; transition:0.3s; }
-.btn-edit { background:#f1c40f;color:#fff; }
-.btn-edit:hover { background:#d4ac0d; }
-.btn-delete { background:#e74c3c;color:#fff; }
-.btn-delete:hover { background:#c0392b; }
+/* Employee card for mobile */
+.employee-card {
+  display: none;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  padding: 12px;
+  margin-bottom: 12px;
+}
+.employee-card .row {
+  margin-bottom: 8px;
+}
+.employee-card strong {
+  display: block;
+  color: #2c3e50;
+  font-size: 13px;
+}
+.employee-card span {
+  display: block;
+  color: #555;
+  font-size: 13px;
+}
+.employee-card .attendance-grid {
+  margin-top: 6px;
+}
 
-/* Attendance grid scroll for mobile */
-.attendance-grid { overflow-x:auto; white-space:nowrap; }
-
-/* Mobile responsive */
-@media(max-width:768px){
-  table, thead, tbody, th, td, tr { display:block; }
-  thead { display:none; }
-  tr { margin-bottom:15px; background:#fff; border-radius:10px; padding:10px; box-shadow:0 2px 6px rgba(0,0,0,0.05); }
-  td { padding-left:50%; text-align:left; position:relative; font-size:13px; }
-  td::before { position:absolute; left:10px; font-weight:bold; }
-  td:nth-of-type(1)::before{content:"Name";}
-  td:nth-of-type(2)::before{content:"Position";}
-  td:nth-of-type(3)::before{content:"Email";}
-  td:nth-of-type(4)::before{content:"Phone";}
-  td:nth-of-type(5)::before{content:"Password";}
-  td:nth-of-type(6)::before{content:"Month";}
-  /* FIXED: Removed 'Attendance' label to prevent overlap */
-  td:nth-of-type(7)::before{content:"";}
-  td:nth-of-type(8)::before{content:"Salary/Day";}
-  td:nth-of-type(9)::before{content:"Monthly Salary";}
-  td:nth-of-type(10)::before{content:"Actions";}
-
-  /* Center attendance buttons for mobile */
-  #employeeList td:nth-of-type(7){
-    text-align:center;
-    padding-left:0;
+/* Responsive layout */
+@media (max-width: 768px) {
+  /* Hide table, show cards */
+  .employee-table {
+    display: none;
+  }
+  .employee-card {
+    display: block;
   }
 
-  .navbar h1 { font-size:16px; }
-  .navbar button { padding:5px 10px; font-size:12px; }
-  form input, form select, form button { font-size:13px; padding:6px; }
-  .attendance-btn { width:20px; height:20px; font-size:10px; }
+  .attendance-btn {
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+  }
+
+  .navbar h1 {
+    font-size: 16px;
+  }
+  .navbar button {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+  form input,
+  form select,
+  form button {
+    font-size: 13px;
+    padding: 6px;
+  }
 }
 </style>
 </head>
 <body>
-
-<!-- Navbar with Products button -->
+<!-- Navbar -->
 <div class="navbar">
   <button onclick="window.location.href='product.html'">Products</button>
 </div>
 
 <div class="container">
-<h1>Employee Attendance & Salary</h1>
+  <h1>Employee Attendance & Salary</h1>
 
-<div class="card">
-  <h2>Add Employee</h2>
-  <form id="employeeForm">
-    <label>Name: <input type="text" id="name" required></label>
-    <label>Position: 
-      <select id="position" required>
-        <option value="Employee">Employee</option>
-        <option value="Supervisor">Supervisor</option>
-      </select>
-    </label>
-    <label>Email: <input type="email" id="email" required></label>
-    <label>Phone: <input type="text" id="phone" required></label>
-    <label>Password: <input type="text" id="password" required></label>
-    <label>Salary per day: <input type="number" id="salary" required></label>
-    <button type="submit">Add Employee</button>
-  </form>
-</div>
-
-<div class="card">
-  <h2>All Employees</h2>
-  <div class="table-wrapper">
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th><th>Position</th><th>Email</th><th>Phone</th><th>Password</th>
-          <th>Month</th><th>Attendance</th><th>Salary/Day</th><th>Monthly Salary</th><th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="employeeList"></tbody>
-    </table>
+  <div class="card">
+    <h2>Add Employee</h2>
+    <form id="employeeForm">
+      <label>Name: <input type="text" id="name" required /></label>
+      <label>Position:
+        <select id="position" required>
+          <option value="Employee">Employee</option>
+          <option value="Supervisor">Supervisor</option>
+        </select>
+      </label>
+      <label>Email: <input type="email" id="email" required /></label>
+      <label>Phone: <input type="text" id="phone" required /></label>
+      <label>Password: <input type="text" id="password" required /></label>
+      <label>Salary per day: <input type="number" id="salary" required /></label>
+      <button type="submit">Add Employee</button>
+    </form>
   </div>
-</div>
+
+  <div class="card">
+    <h2>All Employees</h2>
+    <div class="table-wrapper">
+      <table class="employee-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Password</th>
+            <th>Month</th>
+            <th>Attendance</th>
+            <th>Salary/Day</th>
+            <th>Monthly Salary</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="employeeList"></tbody>
+      </table>
+      <div id="employeeCards"></div>
+    </div>
+  </div>
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  doc,
+  updateDoc,
+  deleteDoc
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDz-C00gltYO9zkYvcrGnaPVwCHcem-7jY",
@@ -163,38 +312,52 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const employeeList = document.getElementById("employeeList");
-const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const employeeCards = document.getElementById("employeeCards");
+const monthNames = [
+  "January","February","March","April","May","June",
+  "July","August","September","October","November","December"
+];
 const attendanceData = {};
 const currentDate = new Date();
 const currentYear = currentDate.getFullYear();
 const currentMonth = currentDate.getMonth() + 1;
 
-function getDaysInMonth(year, month){ return new Date(year, month, 0).getDate(); }
+function getDaysInMonth(year, month) {
+  return new Date(year, month, 0).getDate();
+}
 
-async function loadEmployees(){
-  const snapshot = await getDocs(collection(db,"employees"));
-  employeeList.innerHTML="";
-  snapshot.forEach(docSnap=>{
+async function loadEmployees() {
+  const snapshot = await getDocs(collection(db, "employees"));
+  employeeList.innerHTML = "";
+  employeeCards.innerHTML = "";
+
+  snapshot.forEach((docSnap) => {
     const data = docSnap.data();
     const id = docSnap.id;
-    if(!data.attendance) data.attendance = {};
-    if(!data.salary) data.salary = 0;
-    if(!attendanceData[id]) attendanceData[id] = {...data.attendance};
+    if (!data.attendance) data.attendance = {};
+    if (!data.salary) data.salary = 0;
+    if (!attendanceData[id]) attendanceData[id] = { ...data.attendance };
 
     const yearSelect = `<select id="year-${id}" onchange="renderAttendanceGrid('${id}')">
-      ${[...Array(11)].map((_,y)=>`<option value="${2025+y}" ${currentYear===2025+y?'selected':''}>${2025+y}</option>`).join('')}
+      ${[...Array(11)].map(
+        (_, y) =>
+          `<option value="${2025 + y}" ${currentYear === 2025 + y ? "selected" : ""}>${2025 + y}</option>`
+      ).join("")}
     </select>`;
     const monthSelect = `<select id="month-${id}" onchange="renderAttendanceGrid('${id}')">
-      ${monthNames.map((m,idx)=>`<option value="${idx+1}" ${currentMonth===idx+1?'selected':''}>${m}</option>`).join('')}
+      ${monthNames.map(
+        (m, idx) =>
+          `<option value="${idx + 1}" ${currentMonth === idx + 1 ? "selected" : ""}>${m}</option>`
+      ).join("")}
     </select>`;
 
     const tr = document.createElement("tr");
-    tr.innerHTML=`
+    tr.innerHTML = `
       <td><input type="text" value="${data.name}" id="name-${id}"></td>
       <td>
         <select id="position-${id}">
-          <option value="Employee" ${data.position==="Employee"?"selected":""}>Employee</option>
-          <option value="Supervisor" ${data.position==="Supervisor"?"selected":""}>Supervisor</option>
+          <option value="Employee" ${data.position === "Employee" ? "selected" : ""}>Employee</option>
+          <option value="Supervisor" ${data.position === "Supervisor" ? "selected" : ""}>Supervisor</option>
         </select>
       </td>
       <td><input type="email" value="${data.email}" id="email-${id}"></td>
@@ -209,74 +372,139 @@ async function loadEmployees(){
         <button class="btn btn-delete" onclick="deleteEmployee('${id}')">Delete</button>
       </td>`;
     employeeList.appendChild(tr);
+
+    const card = document.createElement("div");
+    card.className = "employee-card";
+    card.innerHTML = `
+      <div class="row"><strong>Name:</strong><span>${data.name}</span></div>
+      <div class="row"><strong>Position:</strong><span>${data.position}</span></div>
+      <div class="row"><strong>Email:</strong><span>${data.email}</span></div>
+      <div class="row"><strong>Phone:</strong><span>${data.phone}</span></div>
+      <div class="row"><strong>Password:</strong><span>${data.password}</span></div>
+      <div class="row"><strong>Month:</strong>${monthSelect} ${yearSelect}</div>
+      <div class="row"><strong>Attendance:</strong><div id="mattendance-grid-${id}" class="attendance-grid"></div></div>
+      <div class="row"><strong>Salary/Day:</strong><span>${data.salary}</span></div>
+      <div class="row"><strong>Monthly Salary:</strong><span id="mmonthly-salary-${id}">0</span></div>
+      <div class="row">
+        <button class="btn btn-edit" onclick="updateEmployee('${id}')">Update</button>
+        <button class="btn btn-delete" onclick="deleteEmployee('${id}')">Delete</button>
+      </div>`;
+    employeeCards.appendChild(card);
+
     renderAttendanceGrid(id);
   });
 }
 
-window.renderAttendanceGrid = function(id){
+window.renderAttendanceGrid = function (id) {
   const year = parseInt(document.getElementById(`year-${id}`).value);
   const month = parseInt(document.getElementById(`month-${id}`).value);
-  const monthKey = `${year}-${month.toString().padStart(2,'0')}`;
-  if(!attendanceData[id][monthKey]) attendanceData[id][monthKey]={};
+  const monthKey = `${year}-${month.toString().padStart(2, "0")}`;
+  if (!attendanceData[id][monthKey]) attendanceData[id][monthKey] = {};
   const daysInMonth = getDaysInMonth(year, month);
   const grid = [];
   let totalSalary = 0;
-  const perDay = parseFloat(document.getElementById(`salary-${id}`).value||0);
-  for(let d=1; d<=daysInMonth; d++){
-    const dayStr = d.toString().padStart(2,'0');
-    const status = attendanceData[id][monthKey][dayStr]||"";
-    const colorClass = status==="P"?"present":status==="A"?"absent":status==="H"?"half":"empty";
-    grid.push(`<button class="attendance-btn ${colorClass}" id="day-${id}-${dayStr}" onclick="toggleAttendance('${id}','${monthKey}','${dayStr}')">${d}</button>`);
-    if(status==="P") totalSalary += perDay;
-    else if(status==="H") totalSalary += perDay/2;
-  }
-  document.getElementById(`attendance-grid-${id}`).innerHTML = grid.join(' ');
-  document.getElementById(`monthly-salary-${id}`).textContent = totalSalary.toFixed(2);
-}
+  const perDay = parseFloat(document.getElementById(`salary-${id}`)?.value || 0);
 
-window.toggleAttendance=function(id,monthKey,day){
-  if(!attendanceData[id][monthKey]) attendanceData[id][monthKey]={};
-  let status = attendanceData[id][monthKey][day]||"";
-  if(status==="") status="P"; else if(status==="P") status="A"; else if(status==="A") status="H"; else status="";
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dayStr = d.toString().padStart(2, "0");
+    const status = attendanceData[id][monthKey][dayStr] || "";
+    const colorClass =
+      status === "P"
+        ? "present"
+        : status === "A"
+        ? "absent"
+        : status === "H"
+        ? "half"
+        : "empty";
+    grid.push(
+      `<button class="attendance-btn ${colorClass}" onclick="toggleAttendance('${id}','${monthKey}','${dayStr}')">${d}</button>`
+    );
+    if (status === "P") totalSalary += perDay;
+    else if (status === "H") totalSalary += perDay / 2;
+  }
+
+  document.getElementById(`attendance-grid-${id}`).innerHTML = grid.join("");
+  const mobileGrid = document.getElementById(`mattendance-grid-${id}`);
+  if (mobileGrid) mobileGrid.innerHTML = grid.join("");
+
+  document.getElementById(`monthly-salary-${id}`).textContent =
+    totalSalary.toFixed(2);
+  const mSalary = document.getElementById(`mmonthly-salary-${id}`);
+  if (mSalary) mSalary.textContent = totalSalary.toFixed(2);
+};
+
+window.toggleAttendance = function (id, monthKey, day) {
+  if (!attendanceData[id][monthKey]) attendanceData[id][monthKey] = {};
+  let status = attendanceData[id][monthKey][day] || "";
+  if (status === "") status = "P";
+  else if (status === "P") status = "A";
+  else if (status === "A") status = "H";
+  else status = "";
   attendanceData[id][monthKey][day] = status;
   renderAttendanceGrid(id);
-}
+};
 
-document.getElementById("employeeForm").addEventListener("submit", async e=>{
-  e.preventDefault();
-  const name=document.getElementById("name").value;
-  const position=document.getElementById("position").value;
-  const email=document.getElementById("email").value;
-  const phone=document.getElementById("phone").value;
-  const password=document.getElementById("password").value;
-  const salary=parseFloat(document.getElementById("salary").value);
-  await addDoc(collection(db,"employees"),{name,position,email,phone,password,salary,attendance:{}});
-  document.getElementById("employeeForm").reset();
+document
+  .getElementById("employeeForm")
+  .addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const name = document.getElementById("name").value;
+    const position = document.getElementById("position").value;
+    const email = document.getElementById("email").value;
+    const phone = document.getElementById("phone").value;
+    const password = document.getElementById("password").value;
+    const salary = parseFloat(document.getElementById("salary").value);
+    await addDoc(collection(db, "employees"), {
+      name,
+      position,
+      email,
+      phone,
+      password,
+      salary,
+      attendance: {}
+    });
+    document.getElementById("employeeForm").reset();
+    loadEmployees();
+  });
+
+window.updateEmployee = async function (id) {
+  const empRef = doc(db, "employees", id);
+  const name = document.getElementById(`name-${id}`).value;
+  const position = document.getElementById(`position-${id}`).value;
+  const email = document.getElementById(`email-${id}`).value;
+  const phone = document.getElementById(`phone-${id}`).value;
+  const password = document.getElementById(`password-${id}`).value;
+  const salary = parseFloat(document.getElementById(`salary-${id}`).value);
+  await updateDoc(empRef, {
+    name,
+    position,
+    email,
+    phone,
+    password,
+    salary,
+    attendance: attendanceData[id]
+  });
+  alert("✅ Employee updated successfully!");
   loadEmployees();
-});
+};
 
-window.updateEmployee=async function(id){
-  const empRef = doc(db,"employees",id);
-  const name=document.getElementById(`name-${id}`).value;
-  const position=document.getElementById(`position-${id}`).value;
-  const email=document.getElementById(`email-${id}`).value;
-  const phone=document.getElementById(`phone-${id}`).value;
-  const password=document.getElementById(`password-${id}`).value;
-  const salary=parseFloat(document.getElementById(`salary-${id}`).value);
-  await updateDoc(empRef,{name,position,email,phone,password,salary,attendance:attendanceData[id]});
-  alert("Employee updated successfully!");
-  loadEmployees();
-}
+// ✅ Password check before deleting employee
+window.deleteEmployee = async function (id) {
+  const adminPass = prompt("Enter admin password to delete employee:");
+  if (adminPass !== "1234567890") {
+    alert("❌ Incorrect password! Deletion cancelled.");
+    return;
+  }
 
-window.deleteEmployee=async function(id){
-  if(confirm("Are you sure to delete this employee?")){
-    await deleteDoc(doc(db,"employees",id));
+  if (confirm("Are you sure you want to delete this employee?")) {
+    await deleteDoc(doc(db, "employees", id));
     delete attendanceData[id];
+    alert("✅ Employee deleted successfully!");
     loadEmployees();
   }
-}
+};
 
-window.onload=loadEmployees;
+window.onload = loadEmployees;
 </script>
 </body>
 </html>
