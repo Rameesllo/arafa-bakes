@@ -15,6 +15,10 @@
   padding: 10px 15px;
   border-radius: 0 0 10px 10px;
 }
+.navbar h1 {
+  margin: 0;
+  font-size: 18px;
+}
 .navbar button {
   background: #2ce029;
   color: #fff;
@@ -25,17 +29,33 @@
   cursor: pointer;
   transition: 0.3s;
 }
-.navbar button:hover { background: #1f618d; }
+.navbar button:hover {
+  background: #1f618d;
+}
 
+/* Body */
 body {
   font-family: "Segoe UI", sans-serif;
   background: #f0f4f8;
   margin: 0;
   padding: 10px;
 }
-h1, h2 { text-align: center; color: #2c3e50; margin-bottom: 10px; }
-.container { max-width: 1000px; margin: auto; }
 
+/* Headings */
+h1,
+h2 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+/* Container */
+.container {
+  max-width: 1000px;
+  margin: auto;
+}
+
+/* Cards */
 .card {
   background: #fff;
   padding: 15px;
@@ -44,84 +64,153 @@ h1, h2 { text-align: center; color: #2c3e50; margin-bottom: 10px; }
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
-form label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; }
-form input, form select, form button {
-  width: 100%; padding: 8px; margin-top: 5px; margin-bottom: 10px;
-  border-radius: 8px; border: 1px solid #ccc; font-size: 14px;
+/* Form */
+form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 14px;
+}
+form input,
+form select,
+form button {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  box-sizing: border-box;
 }
 form button {
-  background: #3498db; color: #fff; font-weight: bold;
-  cursor: pointer; transition: 0.3s;
+  background: #3498db;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
 }
-form button:hover { background: #2980b9; }
+form button:hover {
+  background: #2980b9;
+}
 
-.table-wrapper { overflow-x: auto; }
+/* Table wrapper (desktop) */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+/* Employee table */
 .employee-table {
-  width: 100%; border-collapse: collapse; margin-top: 10px;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
 }
-.employee-table th, .employee-table td {
-  border: 1px solid #eee; padding: 8px; text-align: center; font-size: 13px;
+.employee-table th,
+.employee-table td {
+  border: 1px solid #eee;
+  padding: 8px;
+  text-align: center;
+  font-size: 13px;
 }
-.employee-table thead { background: #3498db; color: #fff; }
+.employee-table thead {
+  background: #3498db;
+  color: #fff;
+}
 
+/* Attendance buttons */
 .attendance-grid {
-  display: flex; flex-wrap: wrap; justify-content: center; gap: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
 }
 .attendance-btn {
-  width: 35px; height: 35px; border-radius: 50%;
-  font-weight: bold; font-size: 11px; color: #fff;
-  cursor: pointer; border: none; transition: 0.2s;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 11px;
+  color: #fff;
+  cursor: pointer;
+  border: none;
+  transition: 0.2s;
 }
-.attendance-btn:hover { transform: scale(1.15); }
-.present { background: #27ae60; }
-.absent { background: #e74c3c; }
-.half { background: #f39c12; }
-.empty { background: #bdc3c7; color: #666; }
-
-.btn { padding: 4px 8px; border: none; border-radius: 6px; cursor: pointer; margin: 2px; font-size: 12px; }
-.btn-edit { background: #f1c40f; color: #fff; }
-.btn-edit:hover { background: #d4ac0d; }
-.btn-delete { background: #e74c3c; color: #fff; }
-.btn-delete:hover { background: #c0392b; }
-
-/* Advance Popup */
-.advance-popup {
-  position: absolute; background: #fff; border: 1px solid #ccc;
-  border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  padding: 6px; z-index: 1000;
+.attendance-btn:hover {
+  transform: scale(1.15);
 }
-.advance-popup button {
-  margin: 3px; padding: 5px 8px; border: none;
-  border-radius: 6px; cursor: pointer; background: #3498db;
-  color: white; font-size: 12px;
+.present {
+  background: #27ae60;
 }
-.advance-popup button:hover { background: #2e86c1; }
+.absent {
+  background: #e74c3c;
+}
+.half {
+  background: #f39c12;
+}
+.empty {
+  background: #bdc3c7;
+  color: #666;
+}
 
-/* Advance List */
-.advance-list {
-  margin-top: 5px;
-  font-size: 12px;
-  color: #2c3e50;
-  text-align: center;
-  background: #f9f9f9;
+/* Buttons */
+.btn {
+  padding: 4px 8px;
+  border: none;
   border-radius: 6px;
-  padding: 4px;
+  cursor: pointer;
+  margin: 2px;
+  font-size: 12px;
+  transition: 0.3s;
+}
+.btn-edit {
+  background: #f1c40f;
+  color: #fff;
+}
+.btn-edit:hover {
+  background: #d4ac0d;
+}
+.btn-delete {
+  background: #e74c3c;
+  color: #fff;
+}
+.btn-delete:hover {
+  background: #c0392b;
 }
 
+/* Responsive layout */
 @media (max-width: 768px) {
-  .employee-table { display: none; }
-  .attendance-btn { width: 24px; height: 24px; font-size: 10px; }
+  .employee-table {
+    display: none;
+  }
+  .attendance-btn {
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+  }
+  .navbar h1 {
+    font-size: 16px;
+  }
+  .navbar button {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+  form input,
+  form select,
+  form button {
+    font-size: 13px;
+    padding: 6px;
+  }
 }
 </style>
 </head>
 <body>
+<!-- Navbar -->
 <div class="navbar">
+  <h1>Employee Attendance & Salary</h1>
   <button onclick="window.location.href='product.html'">Products</button>
 </div>
 
 <div class="container">
-  <h1>Employee Attendance & Salary</h1>
-
   <div class="card">
     <h2>Add Employee</h2>
     <form id="employeeForm">
@@ -166,7 +255,15 @@ form button:hover { background: #2980b9; }
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  doc,
+  updateDoc,
+  deleteDoc
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDz-C00gltYO9zkYvcrGnaPVwCHcem-7jY",
@@ -174,51 +271,71 @@ const firebaseConfig = {
   projectId: "arafa-bakery-33906",
   storageBucket: "arafa-bakery-33906.appspot.com",
   messagingSenderId: "362520951276",
-  appId: "1:362520951276:web:ead930237865e9aa69e8c9"
+  appId: "1:362520951276:web:ead930237865e9aa69e8c9",
+  measurementId: "G-BY6R29F0QZ"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+
 const employeeList = document.getElementById("employeeList");
-const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 const attendanceData = {};
+const advanceData = {}; // store advance info
+
+const monthNames = [
+  "January","February","March","April","May","June",
+  "July","August","September","October","November","December"
+];
+
 const currentDate = new Date();
 const currentYear = currentDate.getFullYear();
 const currentMonth = currentDate.getMonth() + 1;
 
-function getDaysInMonth(y, m) { return new Date(y, m, 0).getDate(); }
+function getDaysInMonth(year, month) {
+  return new Date(year, month, 0).getDate();
+}
 
 async function loadEmployees() {
   const snapshot = await getDocs(collection(db, "employees"));
   employeeList.innerHTML = "";
-  snapshot.forEach(docSnap => {
+
+  snapshot.forEach((docSnap) => {
     const data = docSnap.data();
     const id = docSnap.id;
+
     if (!data.attendance) data.attendance = {};
-    if (!attendanceData[id]) attendanceData[id] = { ...data.attendance };
+    if (!data.salary) data.salary = 0;
+    if (!data.advances) data.advances = {};
+    attendanceData[id] = data.attendance;
+    advanceData[id] = data.advances;
+
     const yearSelect = `<select id="year-${id}" onchange="renderAttendanceGrid('${id}')">
-      ${[...Array(6)].map((_, y)=>`<option value="${2024 + y}" ${currentYear===2024+y?"selected":""}>${2024+y}</option>`).join("")}
-    </select>`;
-    const monthSelect = `<select id="month-${id}" onchange="renderAttendanceGrid('${id}')">
-      ${monthNames.map((m,i)=>`<option value="${i+1}" ${currentMonth===i+1?"selected":""}>${m}</option>`).join("")}
+      ${[...Array(11)].map(
+        (_, y) => `<option value="${2025 + y}" ${currentYear === 2025 + y ? "selected" : ""}>${2025 + y}</option>`
+      ).join("")}
     </select>`;
 
-    const tr=document.createElement("tr");
-    tr.innerHTML=`
+    const monthSelect = `<select id="month-${id}" onchange="renderAttendanceGrid('${id}')">
+      ${monthNames.map(
+        (m, idx) => `<option value="${idx + 1}" ${currentMonth === idx + 1 ? "selected" : ""}>${m}</option>`
+      ).join("")}
+    </select>`;
+
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
       <td><input type="text" value="${data.name}" id="name-${id}"></td>
-      <td><select id="position-${id}">
-        <option value="Employee" ${data.position==="Employee"?"selected":""}>Employee</option>
-        <option value="Supervisor" ${data.position==="Supervisor"?"selected":""}>Supervisor</option>
-      </select></td>
+      <td>
+        <select id="position-${id}">
+          <option value="Employee" ${data.position === "Employee" ? "selected" : ""}>Employee</option>
+          <option value="Supervisor" ${data.position === "Supervisor" ? "selected" : ""}>Supervisor</option>
+        </select>
+      </td>
       <td><input type="email" value="${data.email}" id="email-${id}"></td>
       <td><input type="text" value="${data.phone}" id="phone-${id}"></td>
       <td><input type="text" value="${data.password}" id="password-${id}"></td>
       <td>${monthSelect} ${yearSelect}</td>
-      <td>
-        <div id="attendance-grid-${id}" class="attendance-grid"></div>
-        <div id="advance-list-${id}" class="advance-list"></div>
-      </td>
-      <td><input type="number" id="salary-${id}" value="${data.salary || 0}"></td>
+      <td id="attendance-grid-${id}" class="attendance-grid"></td>
+      <td><input type="number" id="salary-${id}" value="${data.salary}"></td>
       <td id="monthly-salary-${id}">0</td>
       <td>
         <button class="btn btn-edit" onclick="updateEmployee('${id}')">Update</button>
@@ -229,111 +346,127 @@ async function loadEmployees() {
   });
 }
 
-window.renderAttendanceGrid = function(id){
+window.renderAttendanceGrid = function (id) {
   const year = parseInt(document.getElementById(`year-${id}`).value);
   const month = parseInt(document.getElementById(`month-${id}`).value);
-  const monthKey = `${year}-${month.toString().padStart(2,"0")}`;
-  if(!attendanceData[id][monthKey]) attendanceData[id][monthKey] = {};
-  const days = getDaysInMonth(year,month);
-  const grid = [];
-  let totalSalary=0, totalAdvance=0;
-  const perDay = parseFloat(document.getElementById(`salary-${id}`)?.value || 0);
-  const advances = [];
+  const monthKey = `${year}-${month.toString().padStart(2, "0")}`;
 
-  for(let d=1; d<=days; d++){
-    const ds = d.toString().padStart(2,"0");
-    const dayData = attendanceData[id][monthKey][ds] || {status:"",advance:0};
-    const s = dayData.status;
-    const c = s==="P"?"present":s==="A"?"absent":s==="H"?"half":"empty";
-    grid.push(`<button class="attendance-btn ${c}" title="Advance ₹${dayData.advance||0}" onclick="toggleAttendance('${id}','${monthKey}','${ds}',this)">${d}</button>`);
-    if(s==="P") totalSalary+=perDay;
-    else if(s==="H") totalSalary+=perDay/2;
-    totalAdvance+=dayData.advance||0;
-    if(dayData.advance>0) advances.push(`${d} → ₹${dayData.advance}`);
+  if (!attendanceData[id][monthKey]) attendanceData[id][monthKey] = {};
+  if (!advanceData[id][monthKey]) advanceData[id][monthKey] = {};
+
+  const days = getDaysInMonth(year, month);
+  const perDay = parseFloat(document.getElementById(`salary-${id}`).value || 0);
+
+  let totalSalary = 0;
+  let totalAdvance = 0;
+  const grid = [];
+
+  for (let d = 1; d <= days; d++) {
+    const dayStr = d.toString().padStart(2, "0");
+    const status = attendanceData[id][monthKey][dayStr] || "";
+    const adv = advanceData[id][monthKey][dayStr] || 0;
+
+    const colorClass =
+      status === "P" ? "present" :
+      status === "A" ? "absent" :
+      status === "H" ? "half" : "empty";
+
+    grid.push(
+      `<button title="Advance: ₹${adv}" class="attendance-btn ${colorClass}" onclick="toggleAttendance('${id}','${monthKey}','${dayStr}')">${d}</button>`
+    );
+
+    if (status === "P") totalSalary += perDay;
+    else if (status === "H") totalSalary += perDay / 2;
+
+    totalAdvance += parseFloat(adv);
   }
 
-  document.getElementById(`attendance-grid-${id}`).innerHTML = grid.join("");
-  document.getElementById(`advance-list-${id}`).innerHTML =
-    advances.length ? `<b>Advances:</b> ${advances.join(", ")}` : "<i>No advances this month</i>";
-
   const finalSalary = totalSalary - totalAdvance;
-  document.getElementById(`monthly-salary-${id}`).textContent = `₹${finalSalary.toFixed(2)} (Adv ₹${totalAdvance})`;
+  document.getElementById(`attendance-grid-${id}`).innerHTML = grid.join("");
+  document.getElementById(`monthly-salary-${id}`).textContent =
+    `₹${finalSalary.toFixed(2)} (Advance ₹${totalAdvance})`;
 };
 
-window.toggleAttendance = function(id, monthKey, day, button){
-  if(!attendanceData[id][monthKey]) attendanceData[id][monthKey] = {};
-  let d = attendanceData[id][monthKey][day] || {status:"",advance:0};
-  if(d.status==="") d.status="P";
-  else if(d.status==="P") d.status="A";
-  else if(d.status==="A") d.status="H";
-  else d.status="";
-  attendanceData[id][monthKey][day]=d;
+/* ✅ UPDATED: Advance allowed in every situation */
+window.toggleAttendance = function (id, monthKey, day) {
+  if (!attendanceData[id][monthKey]) attendanceData[id][monthKey] = {};
+  if (!advanceData[id][monthKey]) advanceData[id][monthKey] = {};
+
+  let status = attendanceData[id][monthKey][day] || "";
+
+  if (status === "") status = "P";
+  else if (status === "P") status = "A";
+  else if (status === "A") status = "H";
+  else status = "";
+
+  const currentAdv = advanceData[id][monthKey][day] || 0;
+  const adv = prompt(
+    `Enter advance amount for Day ${day} (current: ₹${currentAdv}):`,
+    currentAdv
+  );
+
+  advanceData[id][monthKey][day] = parseFloat(adv) || 0;
+  attendanceData[id][monthKey][day] = status;
+
   renderAttendanceGrid(id);
-  showAdvancePopup(id, monthKey, day, button);
 };
 
-function showAdvancePopup(id, monthKey, day, button){
-  document.querySelectorAll(".advance-popup").forEach(p=>p.remove());
-  const popup=document.createElement("div");
-  popup.className="advance-popup";
-  popup.innerHTML=[100,200,300,400].map(a=>`<button>${a}</button>`).join("") + "<button>Custom</button>";
-  document.body.appendChild(popup);
-  const r=button.getBoundingClientRect();
-  popup.style.top=r.bottom+window.scrollY+"px";
-  popup.style.left=r.left+window.scrollX+"px";
-  popup.querySelectorAll("button").forEach(btn=>{
-    btn.onclick=()=>{
-      let amt = btn.textContent==="Custom" ? parseFloat(prompt("Enter custom amount")||0) : parseFloat(btn.textContent);
-      if(!attendanceData[id][monthKey][day]) attendanceData[id][monthKey][day]={status:"",advance:0};
-      attendanceData[id][monthKey][day].advance=amt;
-      popup.remove();
-      renderAttendanceGrid(id);
-    };
-  });
-}
-document.addEventListener("click",e=>{
-  if(!e.target.closest(".advance-popup") && !e.target.classList.contains("attendance-btn"))
-    document.querySelectorAll(".advance-popup").forEach(p=>p.remove());
-});
-
-document.getElementById("employeeForm").addEventListener("submit",async e=>{
+document.getElementById("employeeForm").addEventListener("submit", async (e) => {
   e.preventDefault();
-  const data = {
-    name: name.value,
-    position: position.value,
-    email: email.value,
-    phone: phone.value,
-    password: password.value,
-    salary: parseFloat(salary.value),
-    attendance: {}
-  };
-  await addDoc(collection(db,"employees"),data);
-  e.target.reset();
+  const name = document.getElementById("name").value;
+  const position = document.getElementById("position").value;
+  const email = document.getElementById("email").value;
+  const phone = document.getElementById("phone").value;
+  const password = document.getElementById("password").value;
+  const salary = parseFloat(document.getElementById("salary").value);
+  await addDoc(collection(db, "employees"), {
+    name,
+    position,
+    email,
+    phone,
+    password,
+    salary,
+    attendance: {},
+    advances: {}
+  });
+  document.getElementById("employeeForm").reset();
   loadEmployees();
 });
 
-window.updateEmployee = async function(id){
-  const empRef = doc(db,"employees",id);
-  const updated = {
-    name: document.getElementById(`name-${id}`).value,
-    position: document.getElementById(`position-${id}`).value,
-    email: document.getElementById(`email-${id}`).value,
-    phone: document.getElementById(`phone-${id}`).value,
-    password: document.getElementById(`password-${id}`).value,
-    salary: parseFloat(document.getElementById(`salary-${id}`).value),
-    attendance: attendanceData[id]
-  };
-  await updateDoc(empRef, updated);
+window.updateEmployee = async function (id) {
+  const empRef = doc(db, "employees", id);
+  const name = document.getElementById(`name-${id}`).value;
+  const position = document.getElementById(`position-${id}`).value;
+  const email = document.getElementById(`email-${id}`).value;
+  const phone = document.getElementById(`phone-${id}`).value;
+  const password = document.getElementById(`password-${id}`).value;
+  const salary = parseFloat(document.getElementById(`salary-${id}`).value);
+
+  await updateDoc(empRef, {
+    name,
+    position,
+    email,
+    phone,
+    password,
+    salary,
+    attendance: attendanceData[id],
+    advances: advanceData[id]
+  });
   alert("✅ Employee updated successfully!");
   loadEmployees();
 };
 
-window.deleteEmployee = async function(id){
-  const pass=prompt("Enter admin password:");
-  if(pass!=="1234567890") return alert("❌ Wrong password!");
-  if(confirm("Delete this employee?")){
-    await deleteDoc(doc(db,"employees",id));
+window.deleteEmployee = async function (id) {
+  const adminPass = prompt("Enter admin password to delete employee:");
+  if (adminPass !== "1234567890") {
+    alert("❌ Incorrect password! Deletion cancelled.");
+    return;
+  }
+  if (confirm("Are you sure you want to delete this employee?")) {
+    await deleteDoc(doc(db, "employees", id));
     delete attendanceData[id];
+    delete advanceData[id];
+    alert("✅ Employee deleted successfully!");
     loadEmployees();
   }
 };
