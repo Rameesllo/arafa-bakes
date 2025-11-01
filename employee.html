@@ -3,129 +3,171 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Employee Portal</title>
+<title>Employee Attendance (Mobile Only)</title>
 <style>
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background: #f0f4f8;
+  font-family: "Segoe UI", sans-serif;
+  background: #f4f8fb;
   margin: 0;
-  padding: 20px;
+  padding: 10px;
 }
-h1, h2 {
+h1 {
   text-align: center;
-  color: #2c3e50;
+  color: #3498db;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #3498db;
+  color: #fff;
+  padding: 10px;
+  border-radius: 0 0 10px 10px;
+}
+.navbar button {
+  background: #2ce029;
+  border: none;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 6px 10px;
 }
 .container {
-  max-width: 700px;
+  max-width: 500px;
   margin: auto;
 }
 .card {
   background: #fff;
-  padding: 20px;
+  padding: 15px;
   margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+.employee-card {
+  background: #fff;
   border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-form label {
-  display: block;
-  margin-bottom: 10px;
-  font-weight: 600;
-}
-form input {
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
+  padding: 15px;
   margin-bottom: 15px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-  font-size: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
-form button {
-  width: 100%;
-  background: #3498db;
-  color: #fff;
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
-}
-form button:hover {
-  background: #2980b9;
-}
-.employee-details p { margin: 5px 0; }
-
-.selector {
+.employee-card h3 {
   text-align: center;
-  margin-bottom: 15px;
+  color: #3498db;
+  margin-bottom: 8px;
 }
-.selector select {
-  padding: 8px 12px;
-  border-radius: 6px;
-  border: 1px solid #3498db;
+.employee-card p {
+  margin: 6px 0;
   font-size: 14px;
 }
-
+.employee-card input, .employee-card select {
+  width: 100%;
+  padding: 6px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-top: 4px;
+}
 .attendance-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 5px;
+  justify-content: flex-start;
   margin-top: 10px;
 }
-.day-box {
-  width: 46px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 12px;
-}
-.day {
+.attendance-btn {
   width: 34px;
   height: 34px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   border-radius: 50%;
-  color: #fff;
-  transition: 0.3s;
-  font-size: 13px;
-}
-.present { background: #27ae60; }
-.half { background: #f39c12; }
-.absent { background: #e74c3c; }
-.empty { background: #bdc3c7; color: #666; }
-.advance-amount {
-  font-size: 10px;
-  color: #2c3e50;
-  margin-top: 2px;
-}
-.salary-info {
-  margin-top: 8px;
   font-weight: bold;
-  color: #2c3e50;
-  text-align: center;
+  font-size: 13px;
+  color: #fff;
+  cursor: pointer;
+  border: none;
+  transition: 0.2s;
+}
+.attendance-btn:hover { transform: scale(1.1); }
+.present { background: #27ae60; }
+.absent { background: #e74c3c; }
+.half { background: #f39c12; }
+.empty { background: #bdc3c7; color: #666; }
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+.btn {
+  flex: 1;
+  padding: 8px;
+  font-weight: bold;
+  border: none;
+  color: #fff;
+  border-radius: 6px;
+  margin: 0 3px;
+  font-size: 14px;
+}
+.btn-edit { background: #f1c40f; }
+.btn-delete { background: #e74c3c; }
+.btn-edit:hover { background: #d4ac0d; }
+.btn-delete:hover { background: #c0392b; }
+form label {
+  font-size: 14px;
+  display: block;
+  margin-bottom: 8px;
+}
+form input, form select, form button {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+form button {
+  background: #3498db;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
 }
 </style>
 </head>
 <body>
+
+<div class="navbar">
+  <h1>Employee Attendance</h1>
+  <button onclick="window.location.href='product.html'">Products</button>
+</div>
+
 <div class="container">
-  <h1>Employee Portal</h1>
+  <!-- Add Employee -->
   <div class="card">
-    <form id="loginForm">
-      <label>Email: <input type="email" id="email" required /></label>
-      <label>Password: <input type="password" id="password" required /></label>
-      <button type="submit">Login</button>
+    <h2>Add Employee</h2>
+    <form id="employeeForm">
+      <label>Name: <input type="text" id="name" required></label>
+      <label>Position:
+        <select id="position" required>
+          <option value="Employee">Employee</option>
+          <option value="Supervisor">Supervisor</option>
+        </select>
+      </label>
+      <label>Email: <input type="email" id="email" required></label>
+      <label>Phone: <input type="text" id="phone" required></label>
+      <label>Password: <input type="text" id="password" required></label>
+      <label>Salary/Day: <input type="number" id="salary" required></label>
+      <button type="submit">Add</button>
     </form>
   </div>
-  <div id="info"></div>
+
+  <!-- Employee Cards -->
+  <div id="employeeCards"></div>
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc } 
+from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 // 🔥 Firebase Config
 const firebaseConfig = {
@@ -140,123 +182,176 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+const employeeCards = document.getElementById("employeeCards");
+const attendanceData = {};
+const advanceData = {};
+
 const monthNames = [
-  "January","February","March","April","May","June","July",
-  "August","September","October","November","December"
+  "January","February","March","April","May","June",
+  "July","August","September","October","November","December"
 ];
+const now = new Date();
+const currentYear = now.getFullYear();
+const currentMonth = now.getMonth() + 1;
+
 function getDaysInMonth(year, month) {
   return new Date(year, month, 0).getDate();
 }
 
-document.getElementById("loginForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value.trim();
+// 🔹 Load Employees
+async function loadEmployees() {
   const snapshot = await getDocs(collection(db, "employees"));
-  let found = false;
+  employeeCards.innerHTML = "";
 
   snapshot.forEach((docSnap) => {
     const data = docSnap.data();
-    if (data.email === email && data.password === password) {
-      found = true;
-      displayEmployee(data);
-    }
-  });
+    const id = docSnap.id;
+    attendanceData[id] = data.attendance || {};
+    advanceData[id] = data.advances || {};
 
-  if (!found) alert("Invalid email or password!");
-});
+    const monthSelect = `<select id="month-${id}" onchange="renderAttendanceGrid('${id}')">
+      ${monthNames.map((m, i) =>
+        `<option value="${i + 1}" ${i + 1 === currentMonth ? "selected" : ""}>${m}</option>`
+      ).join("")}
+    </select>`;
+    const yearSelect = `<select id="year-${id}" onchange="renderAttendanceGrid('${id}')">
+      ${[currentYear - 1, currentYear, currentYear + 1].map(y =>
+        `<option value="${y}" ${y === currentYear ? "selected" : ""}>${y}</option>`
+      ).join("")}
+    </select>`;
 
-function displayEmployee(data) {
-  const container = document.getElementById("info");
-  container.innerHTML = `
-    <div class="card employee-details">
-      <h2>${data.name}</h2>
-      <p><b>Position:</b> ${data.position}</p>
-      <p><b>Email:</b> ${data.email}</p>
-      <p><b>Phone:</b> ${data.phone}</p>
-      <p><b>Salary/day:</b> ₹${data.salary}</p>
-    </div>
-  `;
-
-  const attendance = data.attendance || {};
-  const advances = data.advances || {};
-
-  // 🔹 Build month list for dropdown
-  const monthKeys = Object.keys(attendance).sort();
-  const currentDate = new Date();
-  const currentMonth = String(currentDate.getMonth() + 1).padStart(2, "0");
-  const currentYear = currentDate.getFullYear().toString();
-  const currentMonthKey = `${currentYear}-${currentMonth}`;
-
-  let selectorHTML = `
-    <div class="selector">
-      <label for="monthSelect"><b>Select Month:</b> </label>
-      <select id="monthSelect">
-  `;
-
-  monthKeys.forEach(key => {
-    const [year, month] = key.split("-");
-    const label = `${monthNames[parseInt(month) - 1]} ${year}`;
-    selectorHTML += `<option value="${key}" ${key===currentMonthKey?'selected':''}>${label}</option>`;
-  });
-
-  selectorHTML += `</select></div><div id="monthDisplay"></div>`;
-  const card = document.createElement("div");
-  card.classList.add("card");
-  card.innerHTML = selectorHTML;
-  container.appendChild(card);
-
-  // 🔹 Render selected month
-  function renderMonth(monthKey) {
-    const [year, month] = monthKey.split("-");
-    const monthIndex = parseInt(month) - 1;
-    const daysInMonth = getDaysInMonth(year, month);
-    let monthlySalary = 0, totalAdvance = 0;
-    let html = `<div class="month-title">${monthNames[monthIndex]} ${year}</div><div class="attendance-grid">`;
-
-    for (let d = 1; d <= daysInMonth; d++) {
-      const dayStr = d.toString().padStart(2, "0");
-      const status = attendance[monthKey]?.[dayStr] || "";
-      const advance = advances[monthKey]?.[dayStr] || 0;
-
-      let className =
-        status === "P" ? "present" :
-        status === "A" ? "absent" :
-        status === "H" ? "half" : "empty";
-
-      if (status === "P") monthlySalary += data.salary;
-      if (status === "H") monthlySalary += data.salary / 2;
-      totalAdvance += advance;
-
-      html += `
-        <div class="day-box">
-          <div class="day ${className}" title="${status || 'No Data'}">${d}</div>
-          ${advance ? `<div class="advance-amount">₹${advance}</div>` : `<div class="advance-amount">&nbsp;</div>`}
-        </div>`;
-    }
-
-    const netSalary = monthlySalary - totalAdvance;
-    html += `</div>
-      <div class="salary-info">
-        <p>Earned: ₹${monthlySalary.toFixed(2)} | Advance: ₹${totalAdvance.toFixed(2)}</p>
-        <p><b>Final Salary: ₹${netSalary.toFixed(2)}</b></p>
+    const card = document.createElement("div");
+    card.className = "employee-card";
+    card.innerHTML = `
+      <h3>${data.name}</h3>
+      <p><b>Position:</b>
+        <select id="position-${id}">
+          <option value="Employee" ${data.position === "Employee" ? "selected" : ""}>Employee</option>
+          <option value="Supervisor" ${data.position === "Supervisor" ? "selected" : ""}>Supervisor</option>
+        </select>
+      </p>
+      <p><b>Email:</b> <input type="email" id="email-${id}" value="${data.email}"></p>
+      <p><b>Phone:</b> <input type="text" id="phone-${id}" value="${data.phone}"></p>
+      <p><b>Password:</b> <input type="text" id="password-${id}" value="${data.password}"></p>
+      <p><b>Month:</b> ${monthSelect} ${yearSelect}</p>
+      <div id="attendance-grid-${id}" class="attendance-grid"></div>
+      <p><b>Salary/day:</b> <input type="number" id="salary-${id}" value="${data.salary}"></p>
+      <p><b>Total Salary:</b> <span id="monthly-salary-${id}">₹0</span></p>
+      <div class="actions">
+        <button class="btn btn-edit" onclick="updateEmployee('${id}')">Update</button>
+        <button class="btn btn-delete" onclick="deleteEmployee('${id}')">Delete</button>
       </div>`;
-
-    document.getElementById("monthDisplay").innerHTML = html;
-  }
-
-  // Initial load (current month)
-  if (monthKeys.includes(currentMonthKey)) {
-    renderMonth(currentMonthKey);
-  } else {
-    renderMonth(monthKeys[monthKeys.length - 1]);
-  }
-
-  // Change event
-  document.getElementById("monthSelect").addEventListener("change", (e) => {
-    renderMonth(e.target.value);
+    employeeCards.appendChild(card);
+    renderAttendanceGrid(id);
   });
 }
+
+// 🎯 Render Attendance + Advance display
+window.renderAttendanceGrid = function(id) {
+  const year = parseInt(document.getElementById(`year-${id}`).value);
+  const month = parseInt(document.getElementById(`month-${id}`).value);
+  const monthKey = `${year}-${String(month).padStart(2,"0")}`;
+  const perDay = parseFloat(document.getElementById(`salary-${id}`).value || 0);
+  const days = getDaysInMonth(year, month);
+  attendanceData[id][monthKey] = attendanceData[id][monthKey] || {};
+  advanceData[id][monthKey] = advanceData[id][monthKey] || {};
+  let totalSalary = 0, totalAdvance = 0;
+  const grid = [];
+
+  for (let d = 1; d <= days; d++) {
+    const dayStr = String(d).padStart(2,"0");
+    const status = attendanceData[id][monthKey][dayStr] || "";
+    const adv = advanceData[id][monthKey][dayStr] || 0;
+    const color =
+      status === "P" ? "present" :
+      status === "A" ? "absent" :
+      status === "H" ? "half" : "empty";
+
+    grid.push(`
+      <div style="text-align:center;">
+        <button class="attendance-btn ${color}" 
+          onclick="toggleAttendance('${id}','${monthKey}','${dayStr}')">
+          ${d}
+        </button>
+        ${adv > 0 ? `<div style="font-size:11px;color:#e67e22;">₹${adv}</div>` : ""}
+      </div>
+    `);
+    if (status === "P") totalSalary += perDay;
+    if (status === "H") totalSalary += perDay / 2;
+    totalAdvance += adv;
+  }
+
+  document.getElementById(`attendance-grid-${id}`).innerHTML = grid.join("");
+  document.getElementById(`monthly-salary-${id}`).textContent =
+    `₹${(totalSalary - totalAdvance).toFixed(2)} (Adv ₹${totalAdvance})`;
+};
+
+// 🎯 Toggle Attendance (only ask advance if P/A/H)
+window.toggleAttendance = function(id, monthKey, day) {
+  const current = attendanceData[id][monthKey][day] || "";
+  const next = current === "" ? "P" : current === "P" ? "A" : current === "A" ? "H" : "";
+
+  attendanceData[id][monthKey][day] = next;
+
+  // ❌ Skip advance prompt if cleared
+  if (next === "") {
+    delete advanceData[id][monthKey][day];
+    renderAttendanceGrid(id);
+    return;
+  }
+
+  // ✅ Ask only if P/A/H
+  const advInput = prompt(`Enter advance for day ${day} (leave blank for none):`,
+    advanceData[id][monthKey][day] || "");
+
+  if (advInput !== null && advInput.trim() !== "" && !isNaN(advInput)) {
+    const adv = parseFloat(advInput);
+    advanceData[id][monthKey][day] = adv > 0 ? adv : 0;
+  }
+
+  renderAttendanceGrid(id);
+};
+
+// 🎯 Add / Update / Delete
+document.getElementById("employeeForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const data = {
+    name: document.getElementById("name").value,
+    position: document.getElementById("position").value,
+    email: document.getElementById("email").value,
+    phone: document.getElementById("phone").value,
+    password: document.getElementById("password").value,
+    salary: parseFloat(document.getElementById("salary").value),
+    attendance: {},
+    advances: {}
+  };
+  await addDoc(collection(db, "employees"), data);
+  e.target.reset();
+  loadEmployees();
+});
+
+window.updateEmployee = async id => {
+  const ref = doc(db, "employees", id);
+  await updateDoc(ref, {
+    email: document.getElementById(`email-${id}`).value,
+    phone: document.getElementById(`phone-${id}`).value,
+    password: document.getElementById(`password-${id}`).value,
+    position: document.getElementById(`position-${id}`).value,
+    salary: parseFloat(document.getElementById(`salary-${id}`).value),
+    attendance: attendanceData[id],
+    advances: advanceData[id]
+  });
+  alert("Updated!");
+};
+
+window.deleteEmployee = async id => {
+  if (confirm("Delete employee?")) {
+    await deleteDoc(doc(db, "employees", id));
+    loadEmployees();
+  }
+};
+
+loadEmployees();
 </script>
 </body>
 </html>
