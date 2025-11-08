@@ -96,13 +96,8 @@ button:hover {
   gap: 10px;
 }
 
-.qty-row select {
-  flex: 1;
-  min-width: 80px;
-}
-
 .qty-row input {
-  flex: 3;
+  flex: 1;
 }
 
 #suggestions {
@@ -251,13 +246,9 @@ th, td {
       <div id="suggestions"></div>
     </div>
 
-    <label>Quantity</label>
+    <label>Quantity (kg)</label>
     <div class="qty-row">
-      <input type="number" id="productQty" placeholder="Enter quantity" required />
-      <select id="qtyUnit">
-        <option value="kg">kg</option>
-        <option value="g">g</option>
-      </select>
+      <input type="number" id="productQty" step="0.01" min="0" placeholder="Enter quantity in kg" required />
     </div>
 
     <button type="submit">➕ Add Product</button>
@@ -278,7 +269,7 @@ th, td {
       <thead>
         <tr>
           <th>Product</th>
-          <th>Quantity</th>
+          <th>Quantity (kg)</th>
           <th>Date & Time</th>
           <th>Action</th>
         </tr>
@@ -379,7 +370,7 @@ function displayProducts() {
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td>${p.name}</td>
-      <td>${p.qty} ${p.unit}</td>
+      <td>${parseFloat(p.qty).toFixed(2)} kg</td>
       <td>${p.datetime.toLocaleString()}</td>
       <td><button class="delete-btn" data-id="${p.id}">Delete</button></td>
     `;
@@ -388,16 +379,15 @@ function displayProducts() {
 
   const totals = {};
   filtered.forEach(p => {
-    const key = `${p.name.toLowerCase()}|${p.unit}`;
+    const key = `${p.name.toLowerCase()}`;
     totals[key] = (totals[key] || 0) + parseFloat(p.qty);
   });
 
   if (Object.keys(totals).length > 0) {
     summaryBox.style.display = "block";
-    for (const [key, total] of Object.entries(totals)) {
-      const [name, unit] = key.split("|");
+    for (const [name, total] of Object.entries(totals)) {
       const div = document.createElement("div");
-      div.textContent = `${name.charAt(0).toUpperCase() + name.slice(1)}: ${total} ${unit}`;
+      div.textContent = `${name.charAt(0).toUpperCase() + name.slice(1)}: ${total.toFixed(2)} kg`;
       summaryContent.appendChild(div);
     }
   }
@@ -416,13 +406,12 @@ document.getElementById("productForm").onsubmit = async (e) => {
   e.preventDefault();
   const name = document.getElementById("productName").value.trim();
   const qty = parseFloat(document.getElementById("productQty").value);
-  const unit = document.getElementById("qtyUnit").value;
   if (!name || qty <= 0) return alert("Enter valid details");
 
   await addDoc(collection(db, "products"), {
     name,
     qty,
-    unit,
+    unit: "kg",
     datetime: serverTimestamp()
   });
 
