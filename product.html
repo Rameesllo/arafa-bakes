@@ -17,17 +17,24 @@ body {
 
 header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-end;
   width: 100%;
   max-width: 500px;
   margin-bottom: 20px;
 }
 
 header h1 {
-  margin: 0;
+  align-self: flex-start;
+  margin: 0 0 10px 0;
   font-size: 24px;
   color: #2c3e50;
+}
+
+.header-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 header button {
@@ -38,6 +45,7 @@ header button {
   color: white;
   font-weight: bold;
   cursor: pointer;
+  width: 130px;
 }
 
 header button:hover {
@@ -179,9 +187,25 @@ th, td {
 }
 
 @media (max-width: 600px) {
+  header {
+    align-items: center;
+  }
+
+  .header-buttons {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  header button {
+    width: auto;
+    min-width: 120px;
+  }
+
   .table-container table, thead, tbody, th, td, tr {
     display: block;
   }
+
   thead { display: none; }
   tr {
     background: #fff;
@@ -209,10 +233,13 @@ th, td {
 </head>
 <body>
 
-<!-- Header with Employee button -->
+<!-- Header with Employee and Stocks buttons -->
 <header>
   <h1>📦 Product Management</h1>
-  <button id="employeeBtn" onclick="window.location.href='employee.html'">Employee</button>
+  <div class="header-buttons">
+    <button onclick="window.location.href='employee.html'">Employee</button>
+    <button onclick="window.location.href='stocks.html'">Stocks</button>
+  </div>
 </header>
 
 <div class="card">
@@ -295,7 +322,6 @@ const currentDate = new Date();
 const currentMonth = currentDate.getMonth() + 1;
 const currentYear = currentDate.getFullYear();
 
-// Month/year dropdown
 monthNames.forEach((m, i) => {
   const opt = document.createElement("option");
   opt.value = i + 1;
@@ -318,7 +344,7 @@ async function loadProducts() {
   const q = query(collection(db, "products"), orderBy("datetime", "asc"));
   const snap = await getDocs(q);
   allData = [];
-  const productSet = new Set(); // to keep only unique names
+  const productSet = new Set();
 
   snap.forEach(d => {
     const data = d.data();
@@ -327,7 +353,7 @@ async function loadProducts() {
     if (data.name) productSet.add(data.name.toLowerCase());
   });
 
-  allProducts = Array.from(productSet); // only unique names
+  allProducts = Array.from(productSet);
   displayProducts();
 }
 
@@ -360,7 +386,6 @@ function displayProducts() {
     productList.appendChild(tr);
   });
 
-  // Monthly totals
   const totals = {};
   filtered.forEach(p => {
     const key = `${p.name.toLowerCase()}|${p.unit}`;
@@ -406,7 +431,6 @@ document.getElementById("productForm").onsubmit = async (e) => {
   loadProducts();
 };
 
-// Unique Suggestions (No Duplicates)
 const productInput = document.getElementById("productName");
 productInput.addEventListener("input", () => {
   const val = productInput.value.toLowerCase();
@@ -415,7 +439,7 @@ productInput.addEventListener("input", () => {
 
   const matches = allProducts
     .filter(p => p.includes(val))
-    .slice(0, 5); // limit 5 suggestions
+    .slice(0, 5);
 
   matches.forEach(m => {
     const div = document.createElement("div");
