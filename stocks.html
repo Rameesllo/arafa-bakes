@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Stock Management</title>
+<title>📦 Stock Management</title>
 
 <style>
 body {
@@ -27,6 +27,7 @@ form {
   max-width: 450px;
   margin: auto;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  position: relative;
 }
 input, select, button {
   width: 100%;
@@ -58,6 +59,28 @@ button:hover {
   margin: 10px auto;
   color: #e74c3c;
   font-weight: bold;
+}
+
+/* 🔍 Suggestions box */
+#suggestions {
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  max-height: 150px;
+  overflow-y: auto;
+  display: none;
+  position: absolute;
+  width: 88%;
+  z-index: 50;
+  margin-top: 5px;
+}
+#suggestions div {
+  padding: 8px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+#suggestions div:hover {
+  background: #f1f1f1;
 }
 
 /* 🔍 Search box */
@@ -136,39 +159,8 @@ th {
 
 /* 📱 Mobile Styles */
 @media (max-width: 600px) {
-  body {
-    padding: 10px;
-  }
-  h1 {
-    font-size: 1.3rem;
-  }
-  form {
-    padding: 15px;
-    width: 95%;
-  }
-  input, select, button {
-    font-size: 14px;
-    padding: 9px;
-  }
-  .table-container {
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  table {
-    font-size: 12px;
-    min-width: 600px; /* Allows horizontal scroll on phone */
-  }
-  th, td {
-    padding: 8px;
-  }
-  .search-box input {
-    width: 95%;
-  }
-  .action-btn {
-    font-size: 12px;
-    padding: 5px 8px;
-  }
+  form { width: 95%; }
+  #suggestions { width: 92%; }
 }
 </style>
 </head>
@@ -177,19 +169,25 @@ th {
 <h1>📦 Stock Management</h1>
 
 <form id="stockForm">
-  <input list="productList" type="text" id="name" placeholder="Product Name" required>
-  <datalist id="productList"></datalist>
+
+  <!-- 🔥 NEW SUGGESTION INPUT -->
+  <input type="text" id="name" placeholder="Product Name" autocomplete="off" required>
+  <div id="suggestions"></div>
+
   <select id="type" required>
     <option value="">Select Type</option>
     <option value="Stock Giving">Bought ➕</option>
     <option value="Selling">Sell ➖</option>
   </select>
+
   <input type="number" step="0.01" id="quantity" placeholder="Quantity (Kg / Gram)" required>
   <input type="number" id="minLimit" step="0.01" placeholder="Minimum Limit (default 10)" min="0.01">
+
   <select id="alertType" required>
     <option value="Important">ALERT</option>
     <option value="Normal">NOT ALERT</option>
   </select>
+
   <button type="submit">Add / Update Stock</button>
 </form>
 
@@ -218,10 +216,12 @@ th {
 </div>
 
 <script type="module">
+
+/* ---------- FIREBASE IMPORTS ---------- */
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, updateDoc, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-// 🔥 Firebase Config
+/* ---------- FIREBASE CONFIG ---------- */
 const firebaseConfig = {
   apiKey: "AIzaSyDz-C00gltYO9zkYvcrGnaPVwCHcem-7jY",
   authDomain: "arafa-bakery-33906.firebaseapp.com",
@@ -236,7 +236,7 @@ const db = getFirestore(app);
 
 let stockData = [];
 
-// 🟢 Load Stocks
+/* ---------- LOAD STOCK ---------- */
 async function loadStock() {
   const querySnapshot = await getDocs(collection(db, "stocks"));
   stockData = [];
@@ -244,36 +244,57 @@ async function loadStock() {
     stockData.push({ id: docSnap.id, ...docSnap.data() });
   });
   stockData.sort((a, b) => a.name.localeCompare(b.name));
-  updateProductList();
   renderTable();
 }
+loadStock();
 
-// 🧾 Render Stock Table
+/* ---------- LIVE SUGGESTIONS ---------- */
+const nameInput = document.getElementById("name");
+const suggestionsBox = document.getElementById("suggestions");
+
+nameInput.addEventListener("input", () => {
+  const text = nameInput.value.toLowerCase();
+  suggestionsBox.innerHTML = "";
+
+  if (text === "") {
+    suggestionsBox.style.display = "none";
+    return;
+  }
+
+  const matches = stockData.filter(s =>
+    s.name.toLowerCase().includes(text)
+  );
+
+  if (matches.length === 0) {
+    suggestionsBox.style.display = "none";
+    return;
+  }
+
+  matches.forEach(item => {
+    const div = document.createElement("div");
+    div.textContent = item.name;
+    div.onclick = () => {
+      nameInput.value = item.name;
+      suggestionsBox.style.display = "none";
+    };
+    suggestionsBox.appendChild(div);
+  });
+
+  suggestionsBox.style.display = "block";
+});
+
+document.addEventListener("click", (e) => {
+  if (e.target !== nameInput) suggestionsBox.style.display = "none";
+});
+
+/* ---------- RENDER TABLE ---------- */
 function renderTable(searchText = "") {
   const table = document.getElementById("stockTable");
-  const notification = document.getElementById("notification");
   table.innerHTML = "";
-  notification.textContent = "";
 
   let filtered = stockData.filter(s =>
     s.name.toLowerCase().includes(searchText.toLowerCase())
   );
-
-  filtered.sort((a, b) => {
-    const aLow = a.quantity <= a.minLimit ? 1 : 0;
-    const bLow = b.quantity <= b.minLimit ? 1 : 0;
-    return bLow - aLow || a.name.localeCompare(b.name);
-  });
-
-  const importantLowStock = filtered.filter(
-    s => s.quantity <= s.minLimit && s.alertType === "Important"
-  );
-
-  if (importantLowStock.length > 0) {
-    notification.textContent =
-      "⚠️ Important Low Stock: " +
-      importantLowStock.map(i => i.name).join(", ");
-  }
 
   filtered.forEach((stock, index) => {
     const low = stock.quantity <= stock.minLimit;
@@ -294,84 +315,56 @@ function renderTable(searchText = "") {
         </div>
         <div class="level-text">${percent.toFixed(0)}%</div>
       </td>
-      <td>
-        <span class="action-btn sell" style="background:#555;" onclick="deleteItem('${stock.id}')">Delete</span>
-      </td>
     `;
     table.appendChild(tr);
   });
 }
 
-// 🧾 Update datalist
-function updateProductList() {
-  const list = document.getElementById("productList");
-  list.innerHTML = "";
-  const sorted = [...stockData].sort((a, b) => a.name.localeCompare(b.name));
-  sorted.forEach(s => {
-    const option = document.createElement("option");
-    option.value = s.name;
-    list.appendChild(option);
-  });
-}
-
-// 🔍 Search
+/* ---------- SEARCH FILTER ---------- */
 document.getElementById("search").addEventListener("input", (e) => {
   renderTable(e.target.value);
 });
 
-// ❌ Delete
-window.deleteItem = async (id) => {
-  if (confirm("Delete this item?")) {
-    await deleteDoc(doc(db, "stocks", id));
-    await loadStock();
-  }
-};
-
-// 🟢 Add / Update
+/* ---------- ADD / UPDATE ---------- */
 document.getElementById('stockForm').addEventListener('submit', async (e) => {
   e.preventDefault();
-  const productName = document.getElementById('name').value.trim();
-  let minLimitInput = parseFloat(document.getElementById('minLimit').value);
-  const quantityInput = parseFloat(document.getElementById('quantity').value);
-  const type = document.getElementById('type').value;
-  const alertType = document.getElementById('alertType').value;
-  if (!minLimitInput) minLimitInput = 10.0;
 
-  const existing = stockData.find(s => s.name.toLowerCase() === productName.toLowerCase());
-  let newQty = quantityInput;
+  const name = nameInput.value.trim();
+  const qty = parseFloat(document.getElementById('quantity').value);
+  const type = document.getElementById('type').value;
+  let minLimit = parseFloat(document.getElementById('minLimit').value);
+  if (!minLimit) minLimit = 10;
+
+  const alertType = document.getElementById('alertType').value;
+
+  const existing = stockData.find(s => s.name.toLowerCase() === name.toLowerCase());
+  let newQty = qty;
 
   if (existing) {
-    if (type === "Stock Giving") {
-      newQty = existing.quantity + quantityInput;
-    } else if (type === "Selling") {
-      newQty = Math.max(existing.quantity - quantityInput, 0);
-    }
+    if (type === "Stock Giving") newQty = existing.quantity + qty;
+    if (type === "Selling") newQty = Math.max(existing.quantity - qty, 0);
+
     await updateDoc(doc(db, "stocks", existing.id), {
       quantity: parseFloat(newQty.toFixed(2)),
-      minLimit: parseFloat(minLimitInput.toFixed(2)),
+      minLimit,
+      alertType,
+      lastUpdated: new Date().toISOString(),
+    });
+  } else {
+    await addDoc(collection(db, "stocks"), {
+      name,
+      quantity: type === "Selling" ? 0 : qty,
+      minLimit,
       alertType,
       lastUpdated: new Date().toISOString()
     });
-  } else {
-    const data = {
-      name: productName,
-      type,
-      quantity: type === "Selling" ? 0 : parseFloat(quantityInput.toFixed(2)),
-      minLimit: parseFloat(minLimitInput.toFixed(2)),
-      alertType,
-      lastUpdated: new Date().toISOString()
-    };
-    await addDoc(collection(db, "stocks"), data);
   }
 
-  document.getElementById("msg").textContent = "✅ Stock updated successfully!";
+  document.getElementById("msg").textContent = "✅ Stock Updated!";
   e.target.reset();
-  await loadStock();
+  loadStock();
 });
 
-// Initial load
-loadStock();
 </script>
 </body>
 </html>
-
